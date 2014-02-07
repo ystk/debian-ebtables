@@ -1,32 +1,26 @@
 #!/usr/bin/make -f
-# Debian rules file for ebtables.
-# Created by Jan Christoph Nordholz <hesso@pool.math.tu-berlin.de>,
-# based on the debhelper templates.
 
+export DEB_BUILD_HARDENING = 1
 MAKE_PATH_REDIRECTIONS:=LIBDIR=/lib/ebtables \
 			BINDIR=/sbin \
 			DESTDIR=debian/ebtables
 
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-  DEBCFLAGS+=-O0
-else
-  DEBCFLAGS+=-O2
-endif
+include /usr/share/cdbs/1/rules/debhelper.mk
 
-build: build-stamp
-build-stamp:
-	dh_testdir
-	make CFLAGS="$(DEBCFLAGS)" $(MAKE_PATH_REDIRECTIONS)
-	touch build-stamp
+CFLAGS+=$(HARDENING_CFLAGS) -fstack-protector-all
+LDFLAGS+=$(HARDENING_LDFLAGS)
 
-clean:
+build/ebtables::
+	make CFLAGS="$(CFLAGS)" $(MAKE_PATH_REDIRECTIONS)
+
+clean::
 	dh_testdir
 	rm -f build-stamp
 	make clean
 	rm -f ebtables.8_ ebtables.sysv_ ebtables-config_ ebtables-save_
 	dh_clean
 
-install: build
+install/ebtables:: build
 	dh_testdir
 	dh_testroot
 	dh_clean
@@ -37,23 +31,3 @@ install: build
 	rm -f debian/ebtables/etc/init.d/ebtables
 	mkdir -p debian/ebtables/usr/share/lintian/overrides
 	cp debian/ebtables.override debian/ebtables/usr/share/lintian/overrides/ebtables
-
-binary: binary-indep binary-arch
-binary-indep: build install
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installdocs
-	dh_installchangelogs ChangeLog
-	dh_installinit -r -- start 30 S . stop 70 0 6 .
-	dh_strip
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	# Ignore warnings on /lib/ebtables libraries - they don't bear SONAMEs
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-.PHONY: build clean binary-indep binary-arch binary install

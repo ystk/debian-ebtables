@@ -1,3 +1,4 @@
-01debian_defaultconfig.patch
-02makefile_adjustments.patch
-03manpage.patch
+debian_defaultconfig.patch
+makefile_adjustments.patch
+manpage.patch
+compensate-for-missing-aligned-u64.patch

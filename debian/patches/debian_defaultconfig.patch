@@ -1,12 +1,9 @@
-#! /bin/sh /usr/share/dpatch/dpatch-run
-## debian_defaultconfig.dpatch by  <hesso@pool.math.tu-berlin.de>
-##
-## DP: Debian enhancements to the ebtables "sysconfig" default settings.
+Description: Debian enhancements to the ebtables "sysconfig" default settings.
+From: Jan Christoph Nordholz <hesso@pool.math.tu-berlin.de>
+---
 
-@DPATCH@
-
---- ebtables-2.0.8.1.orig/ebtables-config
-+++ ebtables-2.0.8.1/ebtables-config
+--- a/ebtables-config
++++ b/ebtables-config
 @@ -1,17 +1,3 @@
 -# Save (and possibly restore) in text format.
 -#   Value: yes|no,  default: yes
