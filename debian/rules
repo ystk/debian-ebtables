@@ -10,6 +10,8 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 CFLAGS+=$(HARDENING_CFLAGS) -fstack-protector-all
 LDFLAGS+=$(HARDENING_LDFLAGS)
 
+DEB_DH_INSTALLINIT_ARGS:=-- start 20 S . stop 80 0 1 6 .
+
 build/ebtables::
 	make CFLAGS="$(CFLAGS)" $(MAKE_PATH_REDIRECTIONS)
 

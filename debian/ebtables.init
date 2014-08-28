@@ -24,7 +24,7 @@
 
 . /lib/lsb/init-functions
 
-[ -x /sbin/ebtables ] || exit 1
+test -f /sbin/ebtables || exit 0
 
 EBTABLES_DUMPFILE_STEM=/etc/ebtables
 

@@ -1,3 +1,20 @@
+ebtables (2.0.10.4-3) unstable; urgency=low
+
+  * packaging update:
+    - fix missing dot in DEB_DH_INSTALLINIT_ARGS (Closes: #706885)
+
+ -- William Dauchy <wdauchy@gmail.com>  Mon, 06 May 2013 14:06:02 +0000
+
+ebtables (2.0.10.4-2) unstable; urgency=low
+
+  * packaging update:
+    - add install init args in rules to fix install warning (Closes: #697275)
+    - module-init-tools is a transitional package. replacing it with kmod
+    (Closes: #697276)
+    - "init script returns 1 when ebtables is removed" (Closes: #684592)
+
+ -- William Dauchy <wdauchy@gmail.com>  Tue, 20 Mar 2013 15:46:02 +0000
+
 ebtables (2.0.10.4-1) unstable; urgency=low
 
   * New upstream release
